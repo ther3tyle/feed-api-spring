@@ -41,8 +41,9 @@ public class FeedComment extends Comment {
     }
 
     public List<Long> getChildIdList() {
-        return this.childComments.stream()
-                .map(Comment::getId).collect(Collectors.toList());
+        List<Long> list = new ArrayList<>();
+        childComments.forEach(e -> list.add(e.getId()));
+        return list;
     }
 
     public Long getParentId() {

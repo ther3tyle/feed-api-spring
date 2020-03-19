@@ -18,5 +18,5 @@ public class FeedDetailsDto {
     private String mdImage;
     private String createdDate;
     private String lastModified;
-    private List<FeedCommentDto> comments = new ArrayList<>();
+    private List<NestedFeedCommentDto> comments = new ArrayList<>();
 }

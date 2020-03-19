@@ -14,4 +14,5 @@ public interface FeedCommentRepository extends JpaRepository<FeedComment, Long> 
     List<FeedComment> findAllByParentComment(FeedComment parentComment);
     List<FeedComment> findAllByUserId(Long userId);
     Page<FeedComment> findAllByFeed(Feed feed, Pageable pageable);
+    void deleteById(Long id);
 }

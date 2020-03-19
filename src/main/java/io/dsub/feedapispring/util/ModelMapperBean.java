@@ -1,8 +1,6 @@
 package io.dsub.feedapispring.util;
 
-import io.dsub.feedapispring.api.v1.model.FeedCommentDto;
-import io.dsub.feedapispring.api.v1.model.FeedDetailsDto;
-import io.dsub.feedapispring.api.v1.model.SimpleFeedDto;
+import io.dsub.feedapispring.api.v1.model.*;
 import io.dsub.feedapispring.domain.Feed;
 import io.dsub.feedapispring.domain.FeedComment;
 import io.dsub.feedapispring.domain.TrackedDomain;
@@ -18,55 +16,55 @@ public class ModelMapperBean {
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
+
         modelMapper.typeMap(Feed.class, FeedDetailsDto.class).addMappings(mapping -> {
             mapping.map(TrackedDomain::getFormattedCreateDate, FeedDetailsDto::setCreatedDate);
             mapping.map(TrackedDomain::getFormattedlastModified, FeedDetailsDto::setLastModified);
         });
+
         modelMapper.typeMap(FeedComment.class, FeedCommentDto.class).addMappings(mapping ->
                 mapping.map(TrackedDomain::getFormattedCreateDate, FeedCommentDto::setCreatedDate));
-//        modelMapper.typeMap(FeedComment.class, FeedCommentDto.class, "defaultMap").addMappings(mapping -> {
-//            mapping.map(TrackedDomain::getFormattedCreateDate, FeedCommentDto::setCreatedDate);
-//            mapping.map(FeedComment::getParentId, FeedCommentDto::setParentId);
-//        });
-//        modelMapper.typeMap(FeedComment.class, FeedCommentDto.class, "flatMap").addMappings(mapping -> {
-//            mapping.skip(FeedCommentDto::setChild);
-//            mapping.map(TrackedDomain::getFormattedCreateDate, FeedCommentDto::setCreatedDate);
-//            mapping.map(FeedComment::getChildIdList, FeedCommentDto::setChildIdList);
-//            mapping.map(FeedComment::getParentId, FeedCommentDto::setParentId);
-//        });
+
+        modelMapper.typeMap(FeedComment.class, FlatFeedCommentDto.class).addMappings(mapping -> {
+            mapping.map(TrackedDomain::getFormattedCreateDate, FlatFeedCommentDto::setCreatedDate);
+            mapping.map(FeedComment::getChildIdList, FlatFeedCommentDto::setChildIdList);
+            mapping.map(FeedComment::getParentId, FlatFeedCommentDto::setParentId);
+        });
+
+        modelMapper.typeMap(FeedComment.class, NestedFeedCommentDto.class).addMappings(mapping -> {
+            mapping.map(TrackedDomain::getFormattedCreateDate, NestedFeedCommentDto::setCreatedDate);
+            mapping.map(FeedComment::getChildComments, NestedFeedCommentDto::setChild);
+            mapping.map(FeedComment::getParentId, NestedFeedCommentDto::setParentId);
+        });
+
+        modelMapper.typeMap(FlatFeedCommentDto.class, FeedCommentDto.class).addMappings(mapping -> {
+            mapping.map(FlatFeedCommentDto::getChildIdList, FeedCommentDto::setChildIdList);
+            mapping.map(FlatFeedCommentDto::getParentId, FeedCommentDto::setParentId);
+        });
+
+        modelMapper.typeMap(NestedFeedCommentDto.class, FeedCommentDto.class).addMappings(mapping -> {
+            mapping.map(NestedFeedCommentDto::getChild, FeedCommentDto::setChild);
+            mapping.map(NestedFeedCommentDto::getParentId, FeedCommentDto::setParentId);
+            mapping.skip(FeedCommentDto::setChildIdList);
+        });
+
         modelMapper.typeMap(Feed.class, SimpleFeedDto.class).addMappings(mapping ->
                 mapping.map(TrackedDomain::getFormattedCreateDate, SimpleFeedDto::setCreatedDate));
+
         modelMapper.validate();
+
         return modelMapper;
     }
 
-    @Bean(name = "flatFeedCommentConverter")
-    public Converter<FeedComment, FeedCommentDto> flatFeedCommentConverter() {
-        return context -> {
-            FeedComment s = context.getSource();
-            FeedCommentDto d = context.getDestination();
-
-            d.setUserId(s.getUserId());
-            d.setText(s.getText());
-            d.setChildIdList(s.getChildIdList());
-            d.setParentId(s.getParentId());
-            d.setCreatedDate(s.getFormattedCreateDate());
-            d.setId(s.getId());
-
-            return d;
-        };
-    }
-
-    @Bean
-    public TypeMap<FeedComment, FeedCommentDto> flatTypeMap() {
-        TypeMap<FeedComment, FeedCommentDto> typeMap = new ModelMapper().emptyTypeMap(FeedComment.class, FeedCommentDto.class);
+    @Bean(value = "addFeedCommentDtoMapper")
+    public TypeMap<AddFeedCommentDto, FeedComment> singleFeedCommentTypeMap() {
+        TypeMap<AddFeedCommentDto, FeedComment> typeMap = new ModelMapper().emptyTypeMap(AddFeedCommentDto.class, FeedComment.class);
         typeMap.addMappings(mapping -> {
-            mapping.map(FeedComment::getId, FeedCommentDto::setId);
-            mapping.map(FeedComment::getText, FeedCommentDto::setText);
-            mapping.map(FeedComment::getChildIdList, FeedCommentDto::setChildIdList);
-            mapping.map(FeedComment::getParentId, FeedCommentDto::setParentId);
-            mapping.map(FeedComment::getUserId, FeedCommentDto::setUserId);
-            mapping.map(FeedComment::getFormattedCreateDate, FeedCommentDto::setCreatedDate);
+            mapping.map(AddFeedCommentDto::getUserId, FeedComment::setUserId);
+            mapping.map(AddFeedCommentDto::getText, FeedComment::setText);
+            mapping.skip(FeedComment::setParentComment);
+            mapping.skip(FeedComment::setChildComments);
+            mapping.skip(FeedComment::setFeed);
         });
         return typeMap;
     }

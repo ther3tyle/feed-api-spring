@@ -7,16 +7,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@JsonPropertyOrder({"id", "user_id", "text", "created_date", "parent_id"})
-public class FeedCommentDto extends BaseFeedCommentDto {
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    List<FeedCommentDto> child = new ArrayList<>();
+@JsonPropertyOrder({"id", "user_id", "text", "created_date", "parent_id", "child_id"})
+public class FlatFeedCommentDto extends BaseFeedCommentDto {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @JsonProperty("child_id")
     List<Long> childIdList;

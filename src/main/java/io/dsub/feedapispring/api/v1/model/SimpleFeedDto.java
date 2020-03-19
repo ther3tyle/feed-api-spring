@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @NoArgsConstructor
 public class SimpleFeedDto {
+    private Long id;
     private String text;
     @NotBlank(message = "mdName must not be blank")
     private String mdName;

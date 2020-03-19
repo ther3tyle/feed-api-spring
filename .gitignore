@@ -36,3 +36,6 @@ src/test/
 
 ### Bootstrap ###
 src/main/java/io/dsub/feedapispring/bootstrap/
+
+### DB ###
+*.db
