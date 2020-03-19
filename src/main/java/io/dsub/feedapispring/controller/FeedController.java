@@ -36,7 +36,7 @@ public class FeedController {
     @GetMapping
     public Page<SimpleFeedDto> getFeedList(
             @RequestParam(name = "pageNo", required = false, defaultValue = "0") Integer pageNo,
-            @RequestParam(name = "pageSize", required = false, defaultValue = "30") Integer pageSize) {
+            @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
 
         pageSize = pageSize > 50 ? 50 : pageSize;
 
