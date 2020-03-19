@@ -5,4 +5,4 @@ Spring boot based rest api
 [Slf4j](http://www.slf4j.org/)\
 [ModelMapper](http://modelmapper.org/)\
 [Mockito](https://site.mockito.org/)\
-[Jackson](https://github.com/FasterXML/jackson)\
+[Jackson](https://github.com/FasterXML/jackson)
