@@ -1,0 +1,39 @@
+{
+  "status": 200,
+  "message": "Feed Detail 조회",
+  "data": {
+    "id": 351,
+    "text": "빌리 아일리시와 H&M의 만남.\n　\n스웨덴의 대표 브랜드 H&M이 빌리 아일리시와 함께 한 컬렉션을 2020년 1월 2일에 공개합니다. 이번 컬렉션에서는 빌리 아일리시의 브랜드 블로쉬(Blohsh)의 로고와 함께 티셔츠, 파카, 스웨트 셔츠, 원피스, 액세서리 등을 만나볼 수 있으며 크림, 그린, 네온 등 파스텔 톤의 컬러로 마무리되었습니다.\n　\nH&M과 빌리 아일리시는 이번 컬렉션을 위해 파리를 베이스로 활동 중인 아트 디렉터 이네스 알파(Ines Alpha)와 함께 메인 비주얼 작업을 진행했으며 컬렉션 비주얼에 영감을 받아 제작된 스냅챗(Snapchat) 필터 또한 함께 제공합니다.\n　\nImages by hm.com",
+    "tags": [
+      "H&M",
+      "BILLIEEILISH",
+      "BLOHSH"
+    ],
+    "likedCount": 4,
+    "replyCount": 2,
+    "mdInfo": {
+      "id": 2,
+      "mdName": "d.fashion",
+      "mdThumb": "https://s3.ap-northeast-2.amazonaws.com/dcode-prod-bucket//mdInfo/thumb/1542106760-3e82774178a54270.JPG",
+      "mdDesc": ""
+    },
+    "mediaList": [
+      {
+        "id": 1747,
+        "type": "image",
+        "url": "https://s3.ap-northeast-2.amazonaws.com/dcode-prod-bucket/feeds/ehm/1576463945-fe92c67c3d1b4e6d.jpg"
+      },
+      {
+        "id": 1748,
+        "type": "image",
+        "url": "https://s3.ap-northeast-2.amazonaws.com/dcode-prod-bucket/feeds/ehm/1576463945-2eaceb13108940a9.jpg"
+      },
+      {
+        "id": 1749,
+        "type": "image",
+        "url": "https://s3.ap-northeast-2.amazonaws.com/dcode-prod-bucket/feeds/ehm/1576463945-107ef7fb40e74817.jpg"
+      }
+    ],
+    "createdAt": "2019-12-16 12:04:36"
+  }
+}
