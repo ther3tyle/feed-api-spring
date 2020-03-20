@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
+@Component
 public class Bootstrap implements CommandLineRunner {
 
     private FeedService feedService;
