@@ -16,15 +16,7 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 @Getter
 @Setter
-public abstract class TrackedDomain {
-
-    @CreatedDate
-    @EqualsAndHashCode.Exclude
-    @Column(name = "created_date",
-            nullable = false,
-            updatable = false,
-            columnDefinition = "TIMESTAMP WITH TIME ZONE")
-    private OffsetDateTime createdDate;
+public abstract class TrackedDomain extends BaseDomain {
 
     @LastModifiedDate
     @EqualsAndHashCode.Exclude
@@ -35,10 +27,7 @@ public abstract class TrackedDomain {
 
     @PrePersist
     protected void persist() {
-        if (this.createdDate == null) {
-            this.createdDate = OffsetDateTime.now();
-            this.lastModified = OffsetDateTime.now();
-        }
+        this.lastModified = OffsetDateTime.now();
     }
 
     @PreUpdate
@@ -48,7 +37,7 @@ public abstract class TrackedDomain {
 
     @Override
     public String toString() {
-        return  "createdDate=" + dateTimeString(this.createdDate) +
+        return super.toString() +
                 ", lastModified=" + dateTimeString(this.lastModified);
     }
 
@@ -60,16 +49,9 @@ public abstract class TrackedDomain {
         return DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss").format(offsetDateTime);
     }
 
-    public String getFormattedCreateDate() {
-        if (this.createdDate != null) {
-            return dateTimeString(this.createdDate);
-        }
-        return "empty";
-    }
-
-    public String getFormattedlastModified() {
-        if (this.createdDate != null) {
-            return dateTimeString(this.createdDate);
+    public String getFormattedLastModified() {
+        if (this.lastModified != null) {
+            return dateTimeString(this.lastModified);
         }
         return "empty";
     }

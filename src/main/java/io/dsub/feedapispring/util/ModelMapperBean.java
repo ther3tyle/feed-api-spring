@@ -4,9 +4,7 @@ import io.dsub.feedapispring.api.v1.model.*;
 import io.dsub.feedapispring.domain.Feed;
 import io.dsub.feedapispring.domain.FeedComment;
 import io.dsub.feedapispring.domain.TrackedDomain;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +17,7 @@ public class ModelMapperBean {
 
         modelMapper.typeMap(Feed.class, FeedDetailsDto.class).addMappings(mapping -> {
             mapping.map(TrackedDomain::getFormattedCreateDate, FeedDetailsDto::setCreatedDate);
-            mapping.map(TrackedDomain::getFormattedlastModified, FeedDetailsDto::setLastModified);
+            mapping.map(TrackedDomain::getFormattedLastModified, FeedDetailsDto::setLastModified);
         });
 
         modelMapper.typeMap(FeedComment.class, FeedCommentDto.class).addMappings(mapping ->
