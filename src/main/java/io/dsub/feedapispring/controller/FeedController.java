@@ -1,12 +1,9 @@
 package io.dsub.feedapispring.controller;
 
 import io.dsub.feedapispring.api.v1.model.FeedDetailsDto;
-import io.dsub.feedapispring.api.v1.model.FeedLikeDto;
 import io.dsub.feedapispring.api.v1.model.SimpleFeedDto;
 import io.dsub.feedapispring.api.v1.response.FeedDetailsResponse;
-import io.dsub.feedapispring.api.v1.response.FeedLikeResponse;
 import io.dsub.feedapispring.api.v1.service.FeedDetailsDtoService;
-import io.dsub.feedapispring.api.v1.service.FeedLikeResultDtoService;
 import io.dsub.feedapispring.api.v1.service.SimpleFeedDtoService;
 import io.dsub.feedapispring.exceptions.FeedNotFoundException;
 import lombok.extern.slf4j.Slf4j;

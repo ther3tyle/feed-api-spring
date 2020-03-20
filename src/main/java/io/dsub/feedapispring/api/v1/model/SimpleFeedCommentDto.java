@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JsonPropertyOrder({"id", "user_id", "text", "created_date", "parent_id", "child_id", "feed_id"})
-public class UpdateFeedCommentDto extends BaseFeedCommentDto {
+public class SimpleFeedCommentDto extends BaseFeedCommentDto {
     @JsonProperty("feed_id")
     Long feedId;
 }

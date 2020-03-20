@@ -55,17 +55,4 @@ public class ModelMapperBean {
 
         return modelMapper;
     }
-
-    @Bean(value = "addFeedCommentDtoMapper")
-    public TypeMap<AddFeedCommentDto, FeedComment> singleFeedCommentTypeMap() {
-        TypeMap<AddFeedCommentDto, FeedComment> typeMap = new ModelMapper().emptyTypeMap(AddFeedCommentDto.class, FeedComment.class);
-        typeMap.addMappings(mapping -> {
-            mapping.map(AddFeedCommentDto::getUserId, FeedComment::setUserId);
-            mapping.map(AddFeedCommentDto::getText, FeedComment::setText);
-            mapping.skip(FeedComment::setParentComment);
-            mapping.skip(FeedComment::setChildComments);
-            mapping.skip(FeedComment::setFeed);
-        });
-        return typeMap;
-    }
 }

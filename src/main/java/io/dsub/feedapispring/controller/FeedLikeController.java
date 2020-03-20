@@ -2,7 +2,7 @@ package io.dsub.feedapispring.controller;
 
 import io.dsub.feedapispring.api.v1.model.FeedLikeDto;
 import io.dsub.feedapispring.api.v1.response.FeedLikeResponse;
-import io.dsub.feedapispring.api.v1.service.FeedLikeResultDtoService;
+import io.dsub.feedapispring.api.v1.service.FeedLikeDtoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/")
 public class FeedLikeController {
 
-    FeedLikeResultDtoService service;
+    FeedLikeDtoService service;
 
-    public FeedLikeController(FeedLikeResultDtoService service) {
+    public FeedLikeController(FeedLikeDtoService service) {
         this.service = service;
     }
 

@@ -1,6 +1,6 @@
 package io.dsub.feedapispring.services;
 
-import io.dsub.feedapispring.api.v1.model.AddFeedCommentDto;
+import io.dsub.feedapispring.api.v1.model.FeedCommentDto;
 import io.dsub.feedapispring.domain.Feed;
 import io.dsub.feedapispring.domain.FeedComment;
 import io.dsub.feedapispring.exceptions.FeedCommentNotFoundException;
@@ -41,8 +41,8 @@ public class FeedCommentService {
         return optional.get();
     }
 
-    public FeedComment addFromDto(AddFeedCommentDto dto) throws FeedNotFoundException, FeedCommentNotFoundException {
-        Feed feed = this.feedService.get(dto.getFeedId());
+    public FeedComment addFromDto(Long feedId, FeedCommentDto dto) throws FeedNotFoundException, FeedCommentNotFoundException {
+        Feed feed = this.feedService.get(feedId);
 
         FeedComment feedComment = new FeedComment();
 

@@ -1,13 +1,10 @@
 package io.dsub.feedapispring.controller;
 
-import io.dsub.feedapispring.api.v1.model.AddFeedCommentDto;
-import io.dsub.feedapispring.api.v1.model.BaseFeedCommentDto;
 import io.dsub.feedapispring.api.v1.model.FeedCommentDto;
-import io.dsub.feedapispring.api.v1.model.UpdateFeedCommentDto;
+import io.dsub.feedapispring.api.v1.model.SimpleFeedCommentDto;
 import io.dsub.feedapispring.api.v1.response.FeedCommentDtoPagedResponse;
 import io.dsub.feedapispring.api.v1.response.FeedCommentResponse;
 import io.dsub.feedapispring.api.v1.service.FeedCommentDtoService;
-import javassist.bytecode.ByteArray;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -43,7 +40,7 @@ public class FeedCommentController {
 
         boolean isFlat = false;
         try {
-            int i = Integer.parseInt(Arrays.toString(flat));
+            isFlat = Integer.parseInt(Arrays.toString(flat)) == 1;
         } catch (NumberFormatException e) {
             if (new String(flat).equals("true")) {
                 isFlat = true;
@@ -61,9 +58,8 @@ public class FeedCommentController {
     }
 
     @ResponseBody
-    @GetMapping("/feeds/{feedId}/comments/{commentId}")
-    public ResponseEntity<FeedCommentResponse> getComment(
-            @PathVariable Long feedId, @PathVariable Long commentId) {
+    @GetMapping("/feeds/*/comments/{commentId}")
+    public ResponseEntity<FeedCommentResponse> getComment(@PathVariable Long commentId) {
         FeedCommentResponse response = feedCommentDtoService.findById(commentId);
         if (response.getError() != null) {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -75,7 +71,7 @@ public class FeedCommentController {
     @ResponseBody
     @PostMapping("/feeds/{feedId}/comments")
     public ResponseEntity<FeedCommentResponse> postFeedComment(
-            @RequestBody AddFeedCommentDto addCommentDto, @PathVariable Long feedId) {
+            @RequestBody FeedCommentDto addCommentDto, @PathVariable Long feedId) {
 
         FeedCommentResponse response = feedCommentDtoService.addFeedComments(feedId, addCommentDto);
         if (response.getError() != null) {
@@ -91,7 +87,7 @@ public class FeedCommentController {
     @ResponseBody
     @PutMapping("/feeds/{feedId}/comments")
     public ResponseEntity<FeedCommentResponse> updateFeedComment(
-            @RequestBody UpdateFeedCommentDto requestDto, @PathVariable Long feedId) {
+            @RequestBody SimpleFeedCommentDto requestDto, @PathVariable Long feedId) {
 
         FeedCommentResponse response = feedCommentDtoService.updateFeedComment(feedId, requestDto);
         if (response.getError() != null) {

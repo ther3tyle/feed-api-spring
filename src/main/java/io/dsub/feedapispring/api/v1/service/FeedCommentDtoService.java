@@ -23,16 +23,13 @@ public class FeedCommentDtoService {
     private FeedCommentService feedCommentService;
     private FeedService feedService;
     private ModelMapper mapper;
-    private TypeMap<AddFeedCommentDto, FeedComment> addCommentDtoMapper;
 
     public FeedCommentDtoService(FeedCommentService feedCommentService,
                                  FeedService feedService,
-                                 ModelMapper mapper,
-                                 @Qualifier(value = "addFeedCommentDtoMapper") TypeMap<AddFeedCommentDto, FeedComment> addCommentDtoMapper) {
+                                 ModelMapper mapper) {
         this.feedCommentService = feedCommentService;
         this.feedService = feedService;
         this.mapper = mapper;
-        this.addCommentDtoMapper = addCommentDtoMapper;
     }
 
     public FeedCommentDtoPagedResponse getFeedComments(Long feedId, Pageable pageable, boolean isFlat) {
@@ -57,7 +54,7 @@ public class FeedCommentDtoService {
         return new FeedCommentDtoPagedResponse(pagedDto, null);
     }
 
-    public FeedCommentResponse addFeedComments(Long feedId, AddFeedCommentDto dto) {
+    public FeedCommentResponse addFeedComments(Long feedId, FeedCommentDto dto) {
         FeedComment comment;
 
         if (dto.getUserId() == null) {
@@ -76,7 +73,7 @@ public class FeedCommentDtoService {
                 if (!parent.getFeed().getId().equals(feedId)) {
                     return new FeedCommentResponse(null, "feed_id mismatch - parent and child points different feed");
                 } else {
-                    comment = addCommentDtoMapper.map(dto);
+                    comment = mapper.map(dto, FeedComment.class);
                     comment.setFeed(parent.getFeed());
                     comment.setParentComment(parent);
                     comment = feedCommentService.save(comment);
@@ -88,7 +85,7 @@ public class FeedCommentDtoService {
         } else {
             try {
                 Feed feed = feedService.get(feedId);
-                comment = addCommentDtoMapper.map(dto);
+                comment = mapper.map(dto, FeedComment.class);
                 comment.setFeed(feed);
                 comment = feedCommentService.save(comment);
                 return new FeedCommentResponse(mapper.map(comment, FeedCommentDto.class), null);
@@ -98,7 +95,7 @@ public class FeedCommentDtoService {
         }
     }
 
-    public FeedCommentResponse updateFeedComment(Long feedId, UpdateFeedCommentDto requestDto) {
+    public FeedCommentResponse updateFeedComment(Long feedId, SimpleFeedCommentDto requestDto) {
         try {
             Feed feed = feedService.get(feedId);
         } catch (FeedNotFoundException e) {
